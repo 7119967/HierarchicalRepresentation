@@ -4,16 +4,16 @@ namespace HierarchicalRepresentation.DataAccess
 {
     public class EntityRepository : IEntityRepository
     {
-        private List<Entity> entities = new List<Entity>
+        public static List<Entity> entities = new List<Entity>
         {
-          new Entity() { Id = 1, Name = "Layout", Icon = "<i class=\"ri-menu-line\"></i>", ParentId = null },
-          new Entity() { Id = 2, Name = "Navigator", Icon = "<i class=\"ri-organization-chart\"></i>", ParentId = 1 },
-          new Entity() { Id = 3, Name = "TopBar", Icon = "<i class=\"ri-menu-line\"></i>", ParentId = 1 },
-          new Entity() { Id = 4, Name = "Exit", ParentId = 3 },
-          new Entity() { Id = 5, Name = "Language", ParentId = 3 },
-          new Entity() { Id = 6, Name = "Currency", ParentId = 3 },
-          new Entity() { Id = 7, Name = "Settings", Icon = "<i class=\"ri-settings-2-line\"></i>",ParentId = 1 },
-          new Entity() { Id = 8, Name = "Footer", Icon = "<i class=\"ri-menu-line\"></i>", ParentId = 1 }
+          new Entity() { Id = 1, Name = "Layout", ParentId = null, Icon = "<i class=\"ri-menu-line\"></i>" },
+          new Entity() { Id = 2, Name = "Navigator", ParentId = 1, Icon = "<i class=\"ri-organization-chart\"></i>" },
+          new Entity() { Id = 3, Name = "TopBar", ParentId = 1, Icon = "<i class=\"ri-menu-line\"></i>" },
+          new Entity() { Id = 4, Name = "Exit", ParentId = 3, Icon = "" },
+          new Entity() { Id = 5, Name = "Language", ParentId = 3, Icon = "" },
+          new Entity() { Id = 6, Name = "Currency", ParentId = 3, Icon = "" },
+          new Entity() { Id = 7, Name = "Settings", ParentId = 1, Icon = "<i class=\"ri-settings-2-line\"></i>" },
+          new Entity() { Id = 8, Name = "Footer", ParentId = 1, Icon = "<i class=\"ri-menu-line\"></i>" }
         };
         public List<Entity> FilteredByParentId(int parentId)
         {

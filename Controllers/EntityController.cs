@@ -29,15 +29,15 @@ namespace HierarchicalRepresentation.Controllers
         }
 
         // GET: EntityController/Create
-        public ActionResult Create(int parentId)
+        public ActionResult Create(int id)
         {
             CreateEntityViewModel model = new CreateEntityViewModel
             {
                 Id = _storage.EntityRepository.GetNewId() + 1,
-                ParentId = parentId
+                ParentId = id
             };
 
-            return View(model);
+            return Json(model);
         }
 
         // POST: EntityController/Create
@@ -53,11 +53,13 @@ namespace HierarchicalRepresentation.Controllers
                     {
                         Id = model.Id,
                         Name = model.Name,
+                        Icon = model.Icon,
                         ParentId = model.ParentId,
                     };
                     _storage.EntityRepository.CreateNewEntity(entity);
                 }
-                return RedirectToAction(nameof(Index));
+                var data = _storage.EntityRepository.ListAllEntities();
+                return View("Index", data);
             }
             catch
             {
@@ -81,15 +83,24 @@ namespace HierarchicalRepresentation.Controllers
 
         // POST: EntityController/Edit/5
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public ActionResult Edit(Entity ent)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(DetailsEntityViewModel model)
         {
+            Entity entity = new Entity();
+            entity.Id = model.Id;
+            entity.Name = model.Name;
+            entity.Icon = model.Icon;
+            entity.ParentId = model.ParentId;
+
             try
             {
-                var entity = _storage.EntityRepository.GetEntityById(ent.Id);
-                _storage.EntityRepository.RemoveEntity(entity);
-                _storage.EntityRepository.CreateNewEntity(ent);
-                return RedirectToAction(nameof(Index));
+                var ent = _storage.EntityRepository.GetEntityById(entity.Id);
+                _storage.EntityRepository.RemoveEntity(ent);
+                _storage.EntityRepository.CreateNewEntity(entity);
+                var data = _storage.EntityRepository.ListAllEntities();
+                return View("Index", data);
+                //return RedirectToAction(nameof(Index));
+                //return View("Index");
             }
             catch
             {
@@ -100,8 +111,9 @@ namespace HierarchicalRepresentation.Controllers
         // GET: EntityController/Delete/5
         public ActionResult Delete(int id)
         {
-            _storage.EntityRepository.RemoveEntityById(id); 
-            return Ok();
+            _storage.EntityRepository.RemoveEntityById(id);
+            var data = _storage.EntityRepository.ListAllEntities();
+            return View(data);
         }
 
         // POST: EntityController/Delete/5

@@ -1,4 +1,4 @@
-﻿@model Entity
+﻿@model HierarchicalRepresentation.ViewModels.EditEntityViewModel
 
 <div class="modal-dialog">
     <div class="modal-content">
@@ -11,7 +11,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="mb-3">
                     <label for="id-edit" class="form-label">Id</label>
-                    <input asp-for="Id" type="text" class="form-control" id="id-edit" type="hidden">
+                    <input asp-for="Id" type="text" class="form-control" id="id-edit" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="name-edit" class="form-label">Name</label>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="parentId-edit" class="form-label">ParentId</label>
-                    <input asp-for="ParentId" type="text" class="form-control" id="parentId-edit" type="hidden">
+                    <input asp-for="ParentId" type="text" class="form-control" id="parentId-edit" readonly>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>

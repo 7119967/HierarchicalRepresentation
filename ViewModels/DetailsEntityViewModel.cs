@@ -1,6 +1,6 @@
 ﻿namespace HierarchicalRepresentation.ViewModels
 {
-    public class EntityViewModel
+    public class DetailsEntityViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

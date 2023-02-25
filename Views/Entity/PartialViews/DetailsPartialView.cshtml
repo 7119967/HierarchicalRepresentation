@@ -1,4 +1,4 @@
-﻿@model Entity
+﻿@model HierarchicalRepresentation.ViewModels.DetailsEntityViewModel
 
 <div class="modal-dialog">
     <div class="modal-content">
@@ -9,25 +9,24 @@
         <div class="modal-body">
             <div class="mb-3">
                 <label for="id" class="form-label">Id</label>
-                <input type="text" class="form-control" id="id" disabled>
+                <input type="text" class="form-control" id="id" readonly>
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" disabled>
+                <input type="text" class="form-control" id="name" readonly>
             </div>
             <div class="mb-3">
                 <label for="icon" class="form-label">Icon</label>
-                <input type="text" class="form-control" id="icon" disabled>
+                <input type="text" class="form-control" id="icon" readonly>
                 <div id="iconHelp" class="form-text"><a href="https://remixicon.com/" target="_blank" rel="noopener noreferrer">Click here to get an icon html-code</a></div>
             </div>
             <div class="mb-3">
                 <label for="parentId" class="form-label">ParentId</label>
-                <input type="text" class="form-control" id="parentId" disabled>
+                <input type="text" class="form-control" id="parentId" readonly>
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save</button>
         </div>
     </div>
 </div>
