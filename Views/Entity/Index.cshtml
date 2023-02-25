@@ -1,0 +1,160 @@
+﻿@model List<Entity>
+@{
+    ViewData["Title"] = "Hierarchical Representation Example";
+}
+<h4>@ViewData["Title"]</h4>
+<hr />
+<ul class="list-group">
+    @{
+        RenderEntity(Model);
+    }
+</ul>
+@functions {
+    private async void RenderEntity(IEnumerable<Entity> data, int? parentId = null)
+    {
+        var items = data.Where(d => d.ParentId == parentId).OrderBy(i => i.Id);
+        if (items.Any())
+        {
+            @foreach (var item in items)
+            {
+                await Html.RenderPartialAsync("PartialViews/ExpandPartialView", item);
+                <div class="ps-4 collapse" id="collapse-@item.Id">
+                @{
+                    RenderEntity(data, item.Id);
+                }
+                </div>
+            }
+        }
+    }
+
+    private void PutDetailsModalBody(object data)
+    {
+        Html.Partial("PartialViews/DetailsPartialView", data);
+    }
+}
+<!-- Modal previewing -->
+<div class="modal fade" id="modalDetaiils" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @Html.Partial("PartialViews/DetailsPartialView", new Entity())
+</div>
+
+<!-- Modal editing -->
+<div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @Html.Partial("PartialViews/EditPartialView", new Entity())
+</div>
+
+<!-- Modal creating -->
+<div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @Html.Partial("PartialViews/DetailsPartialView", new Entity())
+</div>
+
+@section Scripts
+{
+    <script>
+        function expanding(elem){
+            var i = $(elem).children('i')[0];
+            if (i.className === 'ri-add-line') {
+                i.classList = 'ri-subtract-line';
+            }          
+            else {
+                i.classList = 'ri-add-line';
+            }
+        }
+
+        function previewing(entityId) { 
+            $.ajax({
+                url: '@Url.Action("Preview", "Entity")',
+                type: 'GET',
+                data: { 'id': entityId },
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#id').val(data.id);
+                    $('#name').val(data.name);
+                    $('#icon').val(data.icon);
+                    $('#parentId').val(data.parentId);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert(error.responseJSON.status + '\n' + error.responseJSON.message);
+                }
+            });
+        }
+
+        function editing(entityId) {
+            var id = $('input[name="Id"]');
+            var name = $('input[name="Name"]');
+            var icon = $('input[name="Icon"]');
+            var parentId = $('input[name="ParentId"]');
+
+            $.ajax({
+                url: '@Url.Action("Edit", "Entity")',
+                type: 'GET',
+                data: { 'id': entityId },
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#id-edit').val(data.id);
+                    $('#name-edit').val(data.name);
+                    $('#icon-edit').val(data.icon);
+                    $('#parentId-edit').val(data.parentId);
+
+                    id[0].push(data.id);
+                    name[0].push(data.name);
+                    icon[0].push(data.icon);
+                    parentId[0].push(data.parentId);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert(error.responseJSON.status + '\n' + error.responseJSON.message);
+                }
+            });
+        }
+
+        function creating(entityId) {
+            $.ajax({
+                url: '@Url.Action("Preview", "Entity")/'.concat(entityId),
+                type: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#id').val(data.id);
+                    $('#name').val(data.name);
+                    $('#icon').val(data.icon);
+                    $('#parentId').val(data.parentId);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert(error.responseJSON.status + '\n' + error.responseJSON.message);
+                }
+            });
+        }
+
+        function deleting(entityId, elem) {
+            $.ajax({
+                url: '@Url.Action("Delete", "Entity")',
+                type: 'DELETE',
+                data: { 'id': entityId },
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                success: function () {
+                    console.log('The ' + entityId + ' element was deleted from the storage successful');
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert(error.responseJSON.status + '\n' + error.responseJSON.message);
+                }
+            });
+            
+            $('#li-'.concat(entityId)).remove();
+            $('#collapse-'.concat(entityId)).remove();
+            console.log('The ' + entityId + ' element was deleted from the UI successful');
+        }
+    </script>
+}
