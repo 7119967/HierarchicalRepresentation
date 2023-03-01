@@ -26,27 +26,20 @@
             }
         }
     }
-
-    private void PutDetailsModalBody(object data)
-    {
-        Html.Partial("PartialViews/DetailsPartialView", data);
-    }
 }
-<!-- Modal previewing -->
+
+<!-- The previewing modal -->
 <div class="modal fade" id="modalDetaiils" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     @Html.Partial("PartialViews/DetailsPartialView", new DetailsEntityViewModel())
 </div>
-
-<!-- Modal editting -->
+<!-- The editting modal -->
 <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     @Html.Partial("PartialViews/EditPartialView", new EditEntityViewModel())
 </div>
-
-<!-- Modal creating -->
+<!-- The creating modal -->
 <div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     @Html.Partial("PartialViews/CreatePartialView", new CreateEntityViewModel())
 </div>
-
 @section Scripts
 {
     <script>

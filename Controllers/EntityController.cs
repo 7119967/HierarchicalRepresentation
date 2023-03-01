@@ -99,8 +99,6 @@ namespace HierarchicalRepresentation.Controllers
                 _storage.EntityRepository.CreateNewEntity(entity);
                 var data = _storage.EntityRepository.ListAllEntities();
                 return View("Index", data);
-                //return RedirectToAction(nameof(Index));
-                //return View("Index");
             }
             catch
             {
