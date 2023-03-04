@@ -15,7 +15,7 @@ namespace HierarchicalRepresentation.DataAccess
           new Entity() { Id = 7, Name = "Settings", ParentId = 1, Icon = "<i class=\"ri-settings-2-line\"></i>" },
           new Entity() { Id = 8, Name = "Footer", ParentId = 1, Icon = "<i class=\"ri-menu-line\"></i>" }
         };
-        public List<Entity> FilteredByParentId(int parentId)
+        public IEnumerable<Entity> FilteredByParentId(int parentId)
         {
             return entities.FindAll(e => e.ParentId == parentId);
         }
@@ -27,11 +27,11 @@ namespace HierarchicalRepresentation.DataAccess
         {
             return entities.Max(e => e.Id);
         }
-        public List<Entity> ListAllEntities()
+        public IEnumerable<Entity> ListAllEntities()
         {
             return entities.ToList();
         }
-        public List<Entity> ListParentEntities()
+        public IEnumerable<Entity> ListParentEntities()
         {
             return entities.FindAll(e => e.ParentId == null);
         }

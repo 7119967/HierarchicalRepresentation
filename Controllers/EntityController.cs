@@ -109,7 +109,7 @@ namespace HierarchicalRepresentation.Controllers
         // GET: EntityController/Delete/5
         public ActionResult Delete(int id)
         {
-            _storage.EntityRepository.RemoveEntityById(id);
+            _storage.EntityRepository.RemoveEntityById(id - 1);
             var data = _storage.EntityRepository.ListAllEntities();
             return View("Index", data);
         }

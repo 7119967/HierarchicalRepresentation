@@ -15,7 +15,7 @@
         var items = data.Where(d => d.ParentId == parentId).OrderBy(i => i.Id);
         if (items.Any())
         {
-            @foreach (var item in items)
+            @foreach (Entity item in items)
             {
                 await Html.RenderPartialAsync("PartialViews/ExpandPartialView", item);
                 <div class="ps-5 collapse" id="collapse-@item.Id">
@@ -127,7 +127,7 @@
         function deleting(entityId) {
             $.ajax({
                 url: '@Url.Action("Delete", "Entity")',
-                type: 'DELETE',
+                type: 'GET',
                 data: { 'id': entityId },
                 headers: {
                     "Content-Type": "application/json",
@@ -140,9 +140,8 @@
                     alert(error.responseJSON.status + '\n' + error.responseJSON.message);
                 }
             });
-            
             $('#li-'.concat(entityId)).remove();
-            //$('#collapse-'.concat(entityId)).remove();
+            $('#collapse-'.concat(entityId)).remove();
             console.log('The ' + entityId + ' element was deleted from the UI successful');
         }
     </script>

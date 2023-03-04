@@ -4,9 +4,9 @@ namespace HierarchicalRepresentation.DataAccess
 {
     public interface IEntityRepository
     {
-        List<Entity> FilteredByParentId(int parentId);
-        List<Entity> ListAllEntities();
-        List<Entity> ListParentEntities();
+        IEnumerable<Entity> FilteredByParentId(int parentId);
+        IEnumerable<Entity> ListAllEntities();
+        IEnumerable<Entity> ListParentEntities();
         Entity GetEntityById(int id);
         Entity GetRootParent();
         int GetNewId();
